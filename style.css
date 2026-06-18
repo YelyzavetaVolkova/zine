@@ -1,0 +1,246 @@
+:root {
+  --ink: #1a1a1a;
+  --paper: #ffffff;
+  --quiet: #8a8a8a;
+  --hairline: #e7e7e7;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 22px 28px 0;
+  flex-shrink: 0;
+}
+
+.masthead__label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+
+.masthead__year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--quiet);
+}
+
+/* ---------- stage ---------- */
+
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 24px 12px;
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.book-wrap {
+  flex: 1 1 auto;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.book-shadow {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  transform: translate(-50%, -50%);
+  width: min(82%, 800px);
+  height: 70px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.12) 45%, rgba(0,0,0,0) 75%);
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#book {
+  position: relative;
+  z-index: 1;
+}
+
+.page {
+  background: var(--paper);
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.08),
+    0 8px 16px rgba(0,0,0,0.10),
+    0 28px 56px -12px rgba(0,0,0,0.28);
+}
+
+.page-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.hotspot {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 3;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hotspot:hover {
+  background: rgba(255,255,255,0.14);
+  box-shadow: inset 0 0 0 1.5px rgba(0,0,0,0.35);
+}
+
+/* composite front/back cover: photo underneath, vellum design layered on top */
+
+.vellum-cover .cover-bg {
+  position: absolute;
+  inset: 0;
+  filter: brightness(1.75) contrast(0.82) saturate(0.85);
+}
+
+.vellum-cover .cover-haze {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.5);
+  pointer-events: none;
+}
+
+.vellum-cover .cover-overlay {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: multiply;
+  filter: contrast(1.15);
+}
+
+/* vellum / translucent tracing-paper treatment for first & last page */
+
+.page.vellum .page-image {
+  opacity: 0.84;
+  filter: contrast(0.93) brightness(1.04);
+}
+
+.page.vellum::after,
+.vellum-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  filter: url(#grain);
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.page.vellum::before,
+.vellum-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.22);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* ---------- nav arrows ---------- */
+
+.nav {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  z-index: 2;
+}
+
+.nav svg { width: 18px; height: 18px; }
+
+.nav:hover {
+  border-color: var(--ink);
+  transform: scale(1.05);
+}
+
+.nav:active { transform: scale(0.96); }
+
+.nav:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.nav:disabled:hover {
+  border-color: var(--hairline);
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .nav { width: 34px; height: 34px; }
+  .stage { gap: 8px; padding: 16px 6px; }
+}
+
+/* ---------- footer controls ---------- */
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px 22px;
+  flex-shrink: 0;
+}
+
+.controls__hint {
+  font-size: 11px;
+  color: var(--quiet);
+  letter-spacing: 0.02em;
+}
+
+.controls__counter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .controls__hint { display: none; }
+  .controls { justify-content: center; padding: 10px 16px 18px; }
+}

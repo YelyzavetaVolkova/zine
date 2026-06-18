@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ukrainian Electronic Music Scene in Berlin — Zine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- hidden SVG filter used to generate the vellum paper grain -->
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0.2 0.2 0.2 0 0"/>
+    </filter>
+  </svg>
+
+  <header class="masthead">
+    <span class="masthead__label">Ukrainian Electronic Music Scene in Berlin</span>
+    <span class="masthead__year">2026</span>
+  </header>
+
+  <main class="stage">
+    <button class="nav nav--prev" aria-label="Previous page">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="book-wrap">
+      <div class="book-shadow"></div>
+      <div id="book"></div>
+    </div>
+
+    <button class="nav nav--next" aria-label="Next page">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </main>
+
+  <footer class="controls">
+    <span class="controls__hint">drag a corner, or click the edges, to turn the page</span>
+    <span class="controls__counter"><span id="pageCurrent">01</span> / <span id="pageTotal">—</span></span>
+  </footer>
+
+  <script src="assets/vendor/page-flip.browser.js"></script>
+  <script src="pages.js"></script>
+  <script src="links.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
